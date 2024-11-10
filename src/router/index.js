@@ -26,7 +26,7 @@ const router = createRouter({
     // Send unknown routes to the create view
     {
       path: '/:pathMatch(.*)*',
-      redirect: '/create',
+      redirect: '/read',
     },
   ],
 })

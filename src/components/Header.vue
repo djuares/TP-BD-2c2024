@@ -21,6 +21,11 @@ export default {
   <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
       <li class="nav-item">
+        <RouterLink to="/read" :class="['nav-link', { active: isActive('/read') }]">
+          Leer
+        </RouterLink>
+      </li>
+      <li class="nav-item">
         <RouterLink
           to="/create"
           :class="['nav-link', { active: isActive('/create') }]"
@@ -29,11 +34,7 @@ export default {
           Crear
         </RouterLink>
       </li>
-      <li class="nav-item">
-        <RouterLink to="/read" :class="['nav-link', { active: isActive('/read') }]">
-          Leer
-        </RouterLink>
-      </li>
+
       <li class="nav-item">
         <RouterLink to="/update" :class="['nav-link', { active: isActive('/update') }]">
           Actualizar

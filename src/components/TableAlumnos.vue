@@ -10,6 +10,9 @@ export default {
     color: String,
   },
   methods: {
+    // CRUD operations
+    // These methods should call different backend services
+    // depending on the value of 'dbType'
     createAlumno() {
       console.log('createAlumno' + JSON.stringify(this.newAlumno))
       // check valid inputs in frontend before sending to backend
@@ -25,11 +28,15 @@ export default {
     const route = useRoute()
     const crudAction = route.path.split('/')[1]
 
+    // Data used for creating a new alumno
     const newAlumno = reactive({
       padron: '',
       nombre: '',
       apellido: '',
     })
+
+    // Data for updating an existing alumno
+    const isUpdating = ref(false)
 
     // This data should be fetched from the backend
     // if 'dbType' is 'PostgreSQL' then fetch from PostgreSQL
@@ -40,7 +47,7 @@ export default {
       { padron: 112235, nombre: 'Pepe', apellido: 'Argento' },
     ]
 
-    return { crudAction, newAlumno, alumnos }
+    return { crudAction, newAlumno, isUpdating, alumnos }
   },
 }
 </script>
@@ -78,8 +85,10 @@ export default {
             </button>
           </td>
           <td v-if="crudAction === 'update'">
+            <!-- Start Editing Btn -->
             <button
-              @click="updateAlumno(alumno.padron, {})"
+              v-if="!isUpdating"
+              @click="isUpdating = true"
               class="btn btn-info d-flex align-items-center"
               style="height: 4vh"
             >
@@ -90,6 +99,33 @@ export default {
                 alt="Editar"
               />
             </button>
+            <!-- Confirm or Cancel Btns -->
+            <div v-else class="d-flex">
+              <button
+                @click="updateAlumno(alumno.padron, {})"
+                class="btn btn-success d-flex justify-content-center align-items-center flex-grow-1"
+                style="height: 4vh; position: relative"
+              >
+                <img
+                  class="img-fluid"
+                  style="object-fit: contain; max-height: 100%; max-width: 100%"
+                  src="https://static-00.iconduck.com/assets.00/checkmark-icon-512x426-8re0u9li.png"
+                  alt="Confirmar"
+                />
+              </button>
+              <button
+                class="btn btn-danger d-flex justify-content-center align-items-center flex-grow-1"
+                style="height: 4vh"
+              >
+                <img
+                  @click="isUpdating = false"
+                  class="img-fluid"
+                  style="object-fit: contain; max-height: 100%; max-width: 100%"
+                  src="https://static-00.iconduck.com/assets.00/cancel-icon-2048x2048-milcunum.png"
+                  alt="Cancelar"
+                />
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -98,7 +134,7 @@ export default {
       <div class="row mb-2">
         <div class="col-3">
           <input
-            type="text"
+            type="number"
             class="form-control"
             v-model="newAlumno.padron"
             placeholder="Padrón"
