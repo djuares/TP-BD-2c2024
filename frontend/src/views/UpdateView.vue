@@ -15,7 +15,7 @@ export default {
     </div>
     <div class="row">
       <div class="col"><TableAlumnos db-type="PostgreSQL" color="warning" /></div>
-      <div class="col"><TableAlumnos db-type="Redis" color="danger" /></div>
+      <div class="col"><TableAlumnos db-type="MongoDB" color="danger" /></div>
     </div>
   </div>
 </template>

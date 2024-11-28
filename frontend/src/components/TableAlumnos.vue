@@ -1,7 +1,7 @@
 <script>
-import { reactive } from 'vue'
-import { ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import axios from 'axios' // Asegúrate de importar axios
 
 export default {
   name: 'TableAlumnos',
@@ -10,47 +10,81 @@ export default {
     color: String,
   },
   methods: {
-    // CRUD operations
-    // These methods should call different backend services
-    // depending on the value of 'dbType'
-    createAlumno() {
-      console.log('createAlumno' + JSON.stringify(this.newAlumno))
-      // check valid inputs in frontend before sending to backend
+    // Crear un nuevo alumno
+    async createAlumno() {
+      try {
+        // Hacemos la solicitud POST a la API
+        const response = await axios.post('http://localhost:3001/api/alumnos', this.newAlumno)
+        console.log('Alumno creado:', response.data)
+        this.alumnos.push(response.data)
+      } catch (error) {
+        console.error('Error al crear alumno:', error.message)
+      }
     },
-    deleteAlumno(padron) {
-      console.log('deleteAlumno ' + padron)
+
+    // Eliminar un alumno
+    async deleteAlumno(padron) {
+      try {
+        // Hacemos la solicitud DELETE a la API
+        const response = await axios.delete(`http://localhost:3001/api/alumnos/${padron}`)
+        console.log('Alumno eliminado:', response.data)
+        // Opcional: eliminar el alumno de la lista local
+        this.alumnos = this.alumnos.filter((alumno) => alumno.padron !== padron)
+      } catch (error) {
+        console.error('Error al eliminar alumno:', error.message)
+      }
     },
-    updateAlumno(padron, newData) {
-      console.log('updateAlumno ' + padron + ' ' + JSON.stringify(newData))
+
+    // Actualizar un alumno
+    async updateAlumno(padron, newData) {
+      try {
+        // Hacemos la solicitud PUT a la API
+        const response = await axios.put(`http://localhost:3001/api/alumnos/${padron}`, newData)
+        console.log('Alumno actualizado:', response.data)
+        // Opcional: actualizar el alumno en la lista local
+        const index = this.alumnos.findIndex((alumno) => alumno.padron === padron)
+        if (index !== -1) {
+          this.alumnos[index] = response.data
+        }
+      } catch (error) {
+        console.error('Error al actualizar alumno:', error.message)
+      }
     },
   },
   setup() {
     const route = useRoute()
     const crudAction = route.path.split('/')[1]
 
-    // Data used for creating a new alumno
+    // Data usada para crear un nuevo alumno
     const newAlumno = reactive({
       padron: '',
       nombre: '',
       apellido: '',
     })
 
-    // Data for updating an existing alumno
+    // Data para actualizar un alumno existente
     const isUpdating = ref(false)
 
-    // This data should be fetched from the backend
-    // if 'dbType' is 'PostgreSQL' then fetch from PostgreSQL
-    // if 'dbType' is 'Redis' then fetch from Redis
-    const alumnos = [
-      { padron: 112233, nombre: 'Jose', apellido: 'Sanchez' },
-      { padron: 112234, nombre: 'Rosa', apellido: 'Blanca' },
-      { padron: 112235, nombre: 'Pepe', apellido: 'Argento' },
-    ]
+    // Lista de alumnos que se llenará con los datos del backend
+    const alumnos = ref([])
+
+    // Esta función se llama cuando el componente se monta (cuando se carga)
+    onMounted(async () => {
+      try {
+        // Hacemos la solicitud GET para obtener todos los alumnos
+        const response = await axios.get('http://localhost:3001/api/alumnos')
+        alumnos.value = response.data // Asignamos los datos obtenidos a la lista 'alumnos'
+      } catch (error) {
+        console.error('Error al obtener los alumnos:', error.message)
+      }
+    })
 
     return { crudAction, newAlumno, isUpdating, alumnos }
   },
 }
 </script>
+
+
 
 <template>
   <div :class="`p-4 rounded bg-${color}-subtle`">
