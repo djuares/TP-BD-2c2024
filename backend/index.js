@@ -1,22 +1,14 @@
 const express = require('express');
-const mysql = require('mysql2');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const alumnosRoutes = require('./routes/alumnos'); // Ruta para CRUD de Alumnos
+const alumnosRoutes = require('./routes/alumnos');  // Rutas para MongoDB
+const alumnosSQLRoutes = require('./routes/alumnosSQL');  // Rutas para PostgreSQL
+const initializeDatabase = require('./initializeDatabase'); // Importa la función
 const app = express();
 require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
-
-// Conexión a la base de datos
-/*const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});*/
-
 
 // Conexión a MongoDB
 const connectMongoDB = async () => {
@@ -30,23 +22,13 @@ const connectMongoDB = async () => {
 };
 connectMongoDB();
 
-// Rutas
-app.use('/api/alumnos', alumnosRoutes);
+// Inicializa la base de datos PostgreSQL
+initializeDatabase();
 
-// Ruta de prueba
-/*app.get('/test', (req, res) => {
-  db.query('SELECT * FROM estudiantes', (err, results) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Database connection failed' });
-    } else {
-      res.json(results);
-    }
-  });
-});*/
+// Rutas
+app.use('/api/alumnos', alumnosRoutes);  // Rutas para MongoDB
+app.use('/api/sql/alumnos', alumnosSQLRoutes);  // Rutas para PostgreSQL
 
 // Escuchar el servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
-
-
