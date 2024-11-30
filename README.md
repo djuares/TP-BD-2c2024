@@ -1,57 +1,58 @@
 # TP-BD-2c2024
 
-## Frontend
+# Trabajo Práctico Base de Datos
 
-## Recommended IDE Setup
+## Integrantes
+1. Antonella Briglia 
+2.  
+3.
+4. 
+5. 
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Customize configuration
+## Instrucciones para correr el proyecto
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Este proyecto está dividido en dos partes principales: **Frontend** y **Backend**. Para que la aplicación funcione correctamente, es necesario ejecutar ambas partes siguiendo los pasos que se detallan a continuación:
 
-## Project Setup
+### Requisitos previos
+1. Tener instalado **Node.js** (versión recomendada: 18 o superior).
+2. Tener instalado un gestor de paquetes como **npm** o **yarn**.
+3. Configurar las variables de entorno necesarias (ver sección de configuración).
 
-```sh
-npm install
-```
+---
 
-### Compile and Hot-Reload for Development
+### Pasos para ejecutar
 
-```sh
-npm run dev
-```
+1. **Backend**
+   - Abrir una terminal y navegar hasta la carpeta `backend`.
+   - Ejecutar los siguientes comandos:
+     ```bash
+     npm install
+     npm start
+     ```
+   - Esto iniciará el servidor del backend en http://localhost:3001
 
-### Compile and Minify for Production
+2. **Frontend**
+   - Abrir una nueva terminal y navegar hasta la carpeta `frontend`.
+   - Ejecutar los siguientes comandos:
+     ```bash
+     npm install
+     npm run dev
+     ```
+   - Esto iniciará el servidor del frontend y abrirá automáticamente la aplicación en el navegador en http://localhost:5173
 
-```sh
-npm run build
-```
+---
 
-### Lint with [ESLint](https://eslint.org/)
+### Configuración
+Antes de ejecutar el proyecto, asegúrate de configurar las variables de entorno necesarias tanto para el frontend como para el backend.  
 
-```sh
-npm run lint
-```
+Ejemplo de archivo `.env` para el backend:
+```env
+MONGO_URI=<tu_uri_de_mongodb>
+POSTGRESQL_URI=<tu_uri_de_postgresql>
+PORT=5000
 
-
-## Backend
-
-### Iniciar el servidor
-
-Para iniciar el servidor en modo desarrollo:
-
-```sh
-npm run dev
-```
-
-Para iniciar el servidor en modo producción:
-
-```sh
-npm start
-```
-
-El servidor estará disponible en http://localhost:3001.
 
 ### Rutas de la API
 
