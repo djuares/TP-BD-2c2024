@@ -18,7 +18,6 @@ Este proyecto está dividido en dos partes principales: **Frontend** y **Backend
 ### Requisitos previos
 1. Tener instalado **Node.js** (versión recomendada: 18 o superior).
 2. Tener instalado un gestor de paquetes como **npm** o **yarn**.
-3. Configurar las variables de entorno necesarias (ver sección de configuración).
 
 ---
 
@@ -44,19 +43,14 @@ Este proyecto está dividido en dos partes principales: **Frontend** y **Backend
 
 ---
 
-### Configuración
-Antes de ejecutar el proyecto, asegúrate de configurar las variables de entorno necesarias tanto para el frontend como para el backend.  
-
-Ejemplo de archivo `.env` para el backend:
-```env
-MONGO_URI=<tu_uri_de_mongodb>
-POSTGRESQL_URI=<tu_uri_de_postgresql>
-PORT=5000
-
-
 ### Rutas de la API
 
-GET	/alumnos	Obtener la lista de todos los alumnos.
-POST	/alumnos	Crear un nuevo alumno.
-PUT	/alumnos/:padron	Actualizar un alumno por su padrón.
-DELETE	/alumnos/:padron	Eliminar un alumno por su padrón.
+GET	api/alumnos	Obtener la lista de todos los alumnos.
+POST	api/alumnos	Crear un nuevo alumno.
+PUT	api/alumnos/:padron	Actualizar un alumno por su padrón.
+DELETE	api/alumnos/:padron	Eliminar un alumno por su padrón.
+
+GET	api/sql/alumnos	Obtener la lista de todos los alumnos.
+POST	api/sql/alumnos	Crear un nuevo alumno.
+PUT	api/sql/alumnos/:padron	Actualizar un alumno por su padrón.
+DELETE	api/sql/alumnos/:padron	Eliminar un alumno por su padrón.
