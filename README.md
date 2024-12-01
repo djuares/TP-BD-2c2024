@@ -4,7 +4,7 @@
 
 ## Integrantes
 1. Antonella Briglia 
-2.  
+2. Juan Martín Muñoz
 3.
 4. 
 5. 
